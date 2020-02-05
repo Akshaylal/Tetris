@@ -60,8 +60,8 @@ class Display: public Shape{
 	char screen[ROW][COL]{};
 	char vmem[TROW][TCOL];
 	char bg;
-	int score, level, next_tm;
-	bool over;
+	int score, level, next_tm, tetris;
+	bool over, dtetris;
 	public:
 		void show();
 		void copytobg();
@@ -75,8 +75,10 @@ class Display: public Shape{
 		void setData(int, int, int, bool);
 			
 		Display(){
-			bg = '.';
+			bg = ' ';
 			over = 0;
+			tetris = 0;
+			dtetris = 0;
 			for(int i = 0; i < TROW; ++i)
 				for(int j = 0; j < TCOL; ++j)
 					vmem[i][j] = ' ';
@@ -96,8 +98,9 @@ class Player{
 };
 
 class Game{
-	int prev_rand, score, level, levelDelay;
-	bool tetris;
+	int prev_rand, score, level, levelDelay, next_tm;
+	bool tetris, over, gameOn;
+	Display ds;
 	
 	int random_tm();
 	void setLevelSpeed(int);
@@ -105,7 +108,7 @@ class Game{
 	
 	public:
 		void play();
-		Game(){prev_rand = 6; score = 0; level = 0; tetris = 0;}
+		Game(){prev_rand = 6; score = 0; level = 0; tetris = 0; gameOn = 1;}
 };
 
 	    //////////////////////////////
@@ -128,11 +131,9 @@ int main(){
 	//////////////////////////////
 
 void Game::play(){
-	bool over, gameOn = 1;
 	char c;
-	int collisiond, next_tm;
+	int collisiond;
 	clock_t prev = clock();
-	Display ds;
 	srand(time(0));
 	setLevelSpeed(level);
 	initscr();
@@ -249,6 +250,7 @@ void Display::show(){
 	int i, j;
 	char temp[ROW][COL]{};
 	char str_score[20], str_level[10];
+	clock_t t;
 	//play
 	for(i = 0; i < ROW; ++i){
 		for(j = 0; j < COL; ++j){
@@ -291,6 +293,24 @@ void Display::show(){
 		memcpy(&vmem[ROW / 2    ][COL - 1], "                    ", 20);
 		memcpy(&vmem[ROW / 2 + 1][COL - 1], "     GAME OVER!     ", 20);
 		memcpy(&vmem[ROW / 2 + 2][COL - 1], "                    ", 20);
+	}
+	
+	//Tetris status
+	if(tetris == 1 & dtetris){
+		// Tetris!!
+		memcpy(&vmem[STATR + 15][STATC], "Tetris !", 8);
+		t = clock();
+		dtetris = 0;
+	}else if(tetris > 1 & dtetris){
+		// Back to back Tetris!!!
+		memcpy(&vmem[STATR + 15][STATC], "Back to Back", 12);
+		memcpy(&vmem[STATR + 16][STATC], "  Tetris !  ", 12);
+		t = clock();
+		dtetris = 0;
+	}
+	if(clock() > 2000000 + t){
+		memcpy(&vmem[STATR + 15][STATC], "            ", 12);
+		memcpy(&vmem[STATR + 16][STATC], "            ", 12);
 	}
 	
 	// print to screen
@@ -434,6 +454,14 @@ int Display::clearLines(){
 				for(int j = 0; j < COL; ++j)
 					screen[k][j] = screen[k-1][j];
 			++i;
+		}
+	}
+	if(count > 0){
+		if(count == 4){
+			tetris++;
+			dtetris = 1;
+		}else{
+			tetris = 0;
 		}
 	}
 	return count;
