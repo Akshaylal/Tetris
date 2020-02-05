@@ -60,11 +60,9 @@ class Display: public Shape{
 	char screen[ROW][COL]{};
 	char vmem[TROW][TCOL];
 	char bg;
-	int score, level;
+	int score, level, next_tm;
 	bool over;
 	public:
-		int next_tm;
-		
 		void show();
 		void copytobg();
 		bool isFull();
@@ -74,7 +72,7 @@ class Display: public Shape{
 		void rotate(bool);
 		void hardDrop();
 		int clearLines();
-		void setData(int, int, bool);
+		void setData(int, int, int, bool);
 			
 		Display(){
 			bg = '.';
@@ -132,7 +130,7 @@ int main(){
 void Game::play(){
 	bool over, gameOn = 1;
 	char c;
-	int collisiond;
+	int collisiond, next_tm;
 	clock_t prev = clock();
 	Display ds;
 	srand(time(0));
@@ -140,12 +138,12 @@ void Game::play(){
 	initscr();
 	nodelay(stdscr, TRUE);
 	clear();
-	ds.next_tm = random_tm();
-	ds.setData(score, level, 0);
+	next_tm = random_tm();
 	while(gameOn){
 		collisiond = 0;
-		ds.newShape(ds.next_tm);
-		ds.next_tm = random_tm();
+		ds.newShape(next_tm);
+		next_tm = random_tm();
+		ds.setData(score, level, next_tm, 0);
 		ds.show();
 		over = ds.isFull();
 		gameOn = !over;
@@ -177,8 +175,8 @@ void Game::play(){
 		score += 10*(level+1);
 		ds.copytobg();
 		calcScore(ds.clearLines());
-		ds.setData(score, level, over);
 	}
+	ds.setData(score, level, next_tm, over);
 	ds.show();
 	getchar();
 	
@@ -441,10 +439,11 @@ int Display::clearLines(){
 	return count;
 }
 
-void Display::setData(int sc, int l, bool ov){
+void Display::setData(int sc, int l, int tm, bool ov){
 	score = sc;
 	level = l;
 	over = ov;
+	next_tm = tm;
 }
 
 	    //////////////////////////////
