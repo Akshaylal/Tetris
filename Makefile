@@ -1,4 +1,4 @@
-SOURCES = tetris.cpp include/shape.cpp include/display.cpp include/game.cpp
+SOURCES = tetris.cpp include/*.cpp
 FLAGS = -lncurses
 
 all: run
