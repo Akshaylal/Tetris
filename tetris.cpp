@@ -9,22 +9,11 @@
 #include "include/shape.h"
 #include "include/display.h"
 #include "include/game.h"
-
+#include "include/player.h"
 
 using namespace std;
 
 
-class Player{
-	char name[20];
-	unsigned int score;
-	
-	public:
-		void setName(){cin>>name;}
-		void setScore(int x){score = x;}
-		int getScore(){return score;}
-		
-		Player(){score = 0;}
-};
 
 	    //////////////////////////////
 	   //////				   //////
@@ -33,8 +22,34 @@ class Player{
 	//////////////////////////////
 
 int main(){
+	int opt;
 	Game g;
-	g.play();
+	
+	do{
+		cout<<"\033c\n\n\n";
+		cout<<"\t\t\t+--------------------------+\n";
+		cout<<"\t\t\t|                          |\n";
+		cout<<"\t\t\t|          TETRIS          |\n";
+		cout<<"\t\t\t|                          |\n";
+		cout<<"\t\t\t+--------------------------+\n";
+		cout<<"\t\t\t|                          |\n";
+		cout<<"\t\t\t|     1. Play              |\n";
+		cout<<"\t\t\t|                          |\n";
+		cout<<"\t\t\t|     2. Highscore         |\n";
+		cout<<"\t\t\t|                          |\n";
+		cout<<"\t\t\t|     0. Exit              |\n";
+		cout<<"\t\t\t|                          |\n";
+		cout<<"\t\t\t+--------------------------+\n";
+		cout<<"\t\t\t: ";
+		cin>>opt;
+		switch(opt){
+			case 0:break;
+			case 1:g.play();
+			break;
+			case 2:break;
+		}
+	}while(opt != 0);
+	cout<<"\033c";
 	return 0;
 	
 }
