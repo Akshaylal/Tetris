@@ -5,7 +5,9 @@
 #include "defval.h"
 #include "shape.h"
 #include "display.h"
+#include "player.h"
 #include "game.h"
+
 
 	    //////////////////////////////
 	   //////				   //////
@@ -15,10 +17,10 @@
 
 void Game::play(){
 	char c;
-	int collisiond;
+	int collisiond, t_lines = 0;
 	clock_t prev = clock();
 	srand(time(0));
-	setLevelSpeed(level);
+	setLevelSpeed();
 	initscr();
 	nodelay(stdscr, TRUE);
 	clear();
@@ -58,14 +60,19 @@ void Game::play(){
 		}
 		score += 10*(level+1);
 		ds.copytobg();
-		lines = ds.clearLines();
-		calcScore(lines);
+		t_lines = ds.clearLines();
+		calcScore(t_lines);
+		lines += t_lines;
+		checkLevel();
 	}
 	ds.setData(score, level, next_tm, lines, over);
 	ds.show();
 	getchar();
+	getchar();
 	
 	endwin();
+	
+	
 }
 
 int Game::random_tm(){
@@ -96,8 +103,8 @@ void Game::calcScore(int n){
 	score += y;
 }
 
-void Game::setLevelSpeed(int l){
-	switch(l){
+void Game::setLevelSpeed(){
+	switch(level){
 		case 0:levelDelay = 800;
 		break;
 		case 1:levelDelay = 720;
@@ -121,3 +128,24 @@ void Game::setLevelSpeed(int l){
 	}
 }
 
+void Game::checkLevel(){
+	if(lines > 9)
+		level = 1;
+	if(lines > 19)
+		level = 2;
+	if(lines > 29)
+		level = 3;
+	if(lines > 39)
+		level = 4;
+	if(lines > 49)
+		level = 5;
+	if(lines > 59)
+		level = 6;
+	if(lines > 69)
+		level = 7;
+	if(lines > 79)
+		level = 8;
+	if(lines > 89)
+		level = 9;
+	setLevelSpeed();
+}

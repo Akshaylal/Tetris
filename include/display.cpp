@@ -240,7 +240,7 @@ void Display::setData(int sc, int l, int tm, int li, bool ov){
 	level = l;
 	over = ov;
 	next_tm = tm;
-	lines += li;
+	lines = li;
 }
 
 int Display::getTetris(){
