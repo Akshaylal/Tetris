@@ -5,18 +5,17 @@
 #include <cstdio>
 #include <ncurses.h>
 
-
 #include "include/defval.h"
-#include "include/shape.h"
+#include "include/tm.h"
 #include "include/display.h"
-#include "include/player.h"
 #include "include/game.h"
 #include "include/menu.h"
-#include "include/intro.h"
+#include "include/settings.h"
+#include "include/sound.h"
+#include "include/highscore.h"
 
 
 using namespace std;
-
 
 
 	    //////////////////////////////
@@ -27,21 +26,28 @@ using namespace std;
 
 int main(){
 	int opt;
+    Settings set;
+	Sound sound(set);
+	HS* high;
 	Game g;
 	Menu m;
-	Intro anim;
-	anim.show();
 	do{
 		opt = m.show();
 		switch(opt){
 			case 0:break;
-			case 1:g.play();
+			case 1:g.play(set, sound);
 			break;
-			case 2:break;
+			case 2:high = new HS;
+    			getchar();
+    			getchar();
+				delete high;
+				break;
+            case 3:set.show();
+            sound.refresh(set);
+            break;
 		}
 	}while(opt != 0);
 	cout<<"\033c";
 	return 0;
 	
 }
-

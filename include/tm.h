@@ -1,7 +1,7 @@
-#ifndef SHAPE_H
-#define SHAPE_H
+#ifndef TM_H
+#define TM_H
 
-class Shape{
+class Tetromino{
 	protected:
 	const char tetromino[7][2][4] = {
 		{{'X', 'X', 'X', 'X'},
@@ -26,12 +26,14 @@ class Shape{
 		 {'O', 'O', 0, 0}},
 	};
 	
-	protected:
-		char shape[4][4]{};
+	public:
+		char current[4][4]{};
+		char next[4][4]{};
 		int x, y, xn, yn;
 		bool rot(bool);
-	public:
+
 		void newShape(int);
+		void nextShape(int);
 		
 };
 

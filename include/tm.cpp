@@ -1,19 +1,19 @@
 #include "defval.h"
-#include "shape.h"
+#include "tm.h"
 	    //////////////////////////////
 	   //////				   //////
 	  //////	  Shape 	  //////
 	 //////					 //////
 	//////////////////////////////
 
-void Shape::newShape(int ran){
+void Tetromino::newShape(int ran){
 	for(int i = 0; i < 4; ++i)
 		for(int j = 0; j < 4; ++j)
-			shape[i][j] = 0;
+			current[i][j] = 0;
 	
 	for(int i = 0; i < 2; ++i)
 		for(int j = 0; j < 4; ++j)
-			shape[i][j] = tetromino[ran][i][j];
+			current[i][j] = tetromino[ran][i][j];
 	x = (COL / 2) - 1;
 	y = 1;
 	switch(ran){
@@ -29,7 +29,17 @@ void Shape::newShape(int ran){
 	}
 }
 
-bool Shape::rot(bool dir){
+void Tetromino::nextShape(int ran){
+	for(int i = 0; i < 4; ++i)
+		for(int j = 0; j < 4; ++j)
+			next[i][j] = 0;
+	
+	for(int i = 0; i < 2; ++i)
+		for(int j = 0; j < 4; ++j)
+			next[i][j] = tetromino[ran][i][j];
+}
+
+bool Tetromino::rot(bool dir){
 	int t;
 	char tsh[4][4]{};
 	if((y+xn <= ROW) & (x+yn <= COL)){
@@ -37,24 +47,24 @@ bool Shape::rot(bool dir){
 			//anti-clockwise
 			for(int i = 0; i < yn; ++i){
 				for(int j = 0, jt = xn - 1; j < xn; ++j, --jt){
-					tsh[jt][i] = shape[i][j];
+					tsh[jt][i] = current[i][j];
 				}
 			}
 			for(int i = 0; i < 4; ++i){
 				for(int j = 0; j < 4; ++j){
-					shape[i][j] = tsh[i][j];
+					current[i][j] = tsh[i][j];
 				}
 			}
 		}else{
 			//clockwise
 			for(int i = 0, it = yn - 1; i < yn; ++i, --it){
 				for(int j = 0; j < xn; ++j){
-					tsh[j][it] = shape[i][j];
+					tsh[j][it] = current[i][j];
 				}
 			}
 			for(int i = 0; i < 4; ++i){
 				for(int j = 0; j < 4; ++j){
-					shape[i][j] = tsh[i][j];
+					current[i][j] = tsh[i][j];
 				}
 			}
 		}

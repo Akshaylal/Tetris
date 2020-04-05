@@ -13,4 +13,10 @@
 #define STATR 2
 #define STATC 40
 
+#define F_SET "settings.dat"
+#define F_HSC "highscores.dat"
+#define F_SAV "save.dat"
+
+#define MAX_HS 10
+
 #endif
