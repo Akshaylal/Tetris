@@ -29,14 +29,16 @@ int main(){
     Settings set;
 	Sound sound(set);
 	HS* high;
-	Game g;
+	Game* g;
 	Menu m;
 	do{
-		opt = m.show();
+		opt = m.show(sound);
 		switch(opt){
 			case 0:break;
-			case 1:g.play(set, sound);
-			break;
+			case 1:g = new Game;
+				g->play(set, sound);
+				delete g;
+				break;
 			case 2:high = new HS;
     			getchar();
     			getchar();

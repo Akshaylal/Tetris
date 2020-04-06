@@ -11,6 +11,7 @@ class Settings{
         void show();
         void menu();
         void save();
+        void clear_data();
         void reset();
 };
 

@@ -1,9 +1,12 @@
 #include <iostream>
+
+#include "sound.h"
 #include "menu.h"
 
 using namespace std;
 
-int Menu::show(){
+
+int Menu::show(Sound &snd){
 	cout<<"\033c\n\n\n";
 	cout<<"\t\t\t+--------------------------+\n";
 	cout<<"\t\t\t|                          |\n";
@@ -22,10 +25,11 @@ int Menu::show(){
 	cout<<"\t\t\t+--------------------------+\n";
 	cout<<"\t\t\t: ";
 	cin>>opt;
+	snd.select();
 	return opt;
 }
 
-int PauseMenu::show(){
+int PauseMenu::show(Sound &snd){
 	cout<<"\033c\n\n\n";
 	cout<<"\t\t\t+--------------------------+\n";
 	cout<<"\t\t\t|                          |\n";
@@ -42,5 +46,6 @@ int PauseMenu::show(){
 	cout<<"\t\t\t+--------------------------+\n";
 	cout<<"\t\t\t: ";
 	cin>>opt;
+	snd.select();
 	return opt;
 }

@@ -2,6 +2,7 @@
 #define SOUND_H
 
 #define BGM "SFX/Tetris.ogg"
+#define SEL "SFX/select.ogg"
 #define SPIN "SFX/block-rotate.ogg"
 #define HDROP "SFX/force-hit.ogg"
 #define MOVELR "SFX/whoosh.ogg"
@@ -26,6 +27,7 @@ class Sound{
 		void movelr();
 		void clear();
 		void gameover();
+		void select();
 		void stop_all();
 		
 };

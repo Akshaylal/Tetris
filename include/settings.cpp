@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
+#include <cstring>
 
 #include "defval.h"
 #include "settings.h"
@@ -31,7 +33,7 @@ void Settings::change(int c){
 }
 
 void Settings::show(){
-    int opt, n = 4, i = 0;
+    int opt, n = 5, i = 0;
     char ar[n][100];
 
     do{
@@ -39,6 +41,7 @@ void Settings::show(){
         sprintf(ar[i++], "\t\t|           %d. BGM           (%c)                 |\n", i, sound_bgm?'Y':'N');
         sprintf(ar[i++], "\t\t|           %d. SFX           (%c)                 |\n", i, sound_sfx?'Y':'N');
         sprintf(ar[i++], "\t\t|           %d. Background    (%c)                 |\n", i, bg?'.':' ');
+        sprintf(ar[i++], "\t\t|           %d. Clear Data                        |\n", i);
         sprintf(ar[i++], "\t\t|           %d. Reset                             |\n", i);
 
         cout<<"\033c\n\n\n";
@@ -59,6 +62,8 @@ void Settings::show(){
 	    cin>>opt;
         if(opt == n){
             reset();
+        }else if(opt == n-1){
+            clear_data();
         }else{
             change(opt);
         }
@@ -72,6 +77,14 @@ void Settings::save(){
     s.open(F_SET, ios::binary);
     s.write((char*)this, sizeof(Settings));
     s.close();
+}
+
+void Settings::clear_data(){
+    char cmd[50] = "rm ";
+    strcat(cmd, F_HSC);
+    strcat(cmd, " ");
+    strcat(cmd, F_SAV);
+    system(cmd);
 }
 
 void Settings::reset(){

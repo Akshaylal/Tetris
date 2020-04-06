@@ -87,7 +87,7 @@ void Game::play(Settings& sett, Sound& snd){
 					break;
 					case 27:
 						stop_display();
-						switch(pmenu.show()){
+						switch(pmenu.show(snd)){
 							case 1:start_display();
 							break;
 							case 2:restart();

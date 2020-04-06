@@ -78,6 +78,13 @@ void Sound::gameover(){
 	}
 }
 
+void Sound::select(){
+	if(sfx_enable){
+		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &", SEL);
+		system(command);
+	}
+}
+
 void Sound::stop_all(){
 	system("killall canberra-gtk-play");
 	bgm_playing = false;

@@ -5,13 +5,13 @@
 class Menu{
 	int opt;
 	public:
-		int show();
+		int show(Sound&);
 };
 
 class PauseMenu{
 	int opt;
 	public:
-		int show();
+		int show(Sound&);
 };
 
 #endif
