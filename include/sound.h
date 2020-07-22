@@ -1,7 +1,7 @@
 #ifndef SOUND_H
 #define SOUND_H
 
-#define BGM "SFX/Tetris.ogg"
+#define BGM "SFX/Tetris.ogg -V 10.0"
 #define SEL "SFX/select.ogg"
 #define SPIN "SFX/block-rotate.ogg"
 #define HDROP "SFX/force-hit.ogg"

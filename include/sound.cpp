@@ -35,7 +35,7 @@ void Sound::refresh(Settings &sett){
 
 void Sound::bgm(){
 	if(bgm_enable){
-		sprintf(command , "canberra-gtk-play -f %s -l 10000 -V 10.0 &", BGM);
+		sprintf(command , "canberra-gtk-play -f %s -l 10000 &> /dev/null &", BGM);
 		system(command);
 		bgm_playing = true;
 	}
@@ -43,28 +43,28 @@ void Sound::bgm(){
 
 void Sound::spin(){
 	if(sfx_enable){
-		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &", SPIN);
+		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &> /dev/null &", SPIN);
 		system(command);
 	}
 }
 
 void Sound::hdrop(){
 	if(sfx_enable){
-		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &", HDROP);
+		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &> /dev/null &", HDROP);
 		system(command);
 	}
 }
 
 void Sound::movelr(){
 	if(sfx_enable){
-		sprintf(command , "canberra-gtk-play -f %s -V 0.0 &", MOVELR);
+		sprintf(command , "canberra-gtk-play -f %s -V 0.0 &> /dev/null &", MOVELR);
 		system(command);
 	}
 }
 
 void Sound::clear(){
 	if(sfx_enable){
-		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &", CLEAR);
+		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &> /dev/null &", CLEAR);
 		system(command);
 	}
 }
@@ -73,14 +73,14 @@ void Sound::gameover(){
 	stop_all();
 	if(sfx_enable){
 		system("killall canberra-gtk-play");
-		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &", GAME_OVER);
+		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &> /dev/null &", GAME_OVER);
 		system(command);
 	}
 }
 
 void Sound::select(){
 	if(sfx_enable){
-		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &", SEL);
+		sprintf(command , "canberra-gtk-play -f %s -V -5.0 &> /dev/null &", SEL);
 		system(command);
 	}
 }
